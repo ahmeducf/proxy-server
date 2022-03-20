@@ -1,7 +1,7 @@
 # Proxy Server
 Proxy is a simple concurrent HTTP proxy server that caches web objects.
 
-It's an application for learning about *Network Programming* and *Concurrent Programming*.
+It's an application for learning about ***Socket Programming*** and ***Concurrent Programming***.
 
 
 ## Table of contents
