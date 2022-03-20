@@ -1,5 +1,5 @@
 # Proxy Server
-Proxy is a simple concurrent HTTP proxy server that caches web objects.
+Proxy is a simple concurrent HTTP proxy server that caches recently-requested web objects.
 
 It's an application for learning about ***Socket Programming*** and ***Concurrent Programming***.
 
