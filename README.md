@@ -13,7 +13,7 @@ It's an application for learning about ***Socket Programming*** and ***Concurren
 | [How does proxy deal with concurrent requests?](#How-does-proxy-deal-with-concurrent-requests) |
 | [How does proxy synchronize accesses to cache?](#How-does-proxy-synchronize-accesses-to-cache) |
 |                                  [Requirements](#Requirements)                                 |
-|                            [How to test proxy?](#How-to-test-proxy?)                           |
+|                            [How to test proxy?](#How-to-test-proxy)                            |
 |                           [My thoughts about the project](#Thoughts)                           |
 
 
