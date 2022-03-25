@@ -1,7 +1,7 @@
 #ifndef SBUF_H
 #define SBUF_H
-#include "semaphore.h"
-#include "../proxy_helpers/wrappers.h"
+#include "../semaphore/semaphore.h"
+#include "../proxy-helpers/wrappers.h"
 
 #define NTHREADS 4
 #define SBUFSIZE 16

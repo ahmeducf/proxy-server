@@ -2,9 +2,9 @@
 #define CACHE_H
 #include <stdio.h>
 #include <stdlib.h>
-#include "constants.h"
-#include "proxy_helpers/wrappers.h"
-#include "thread_helpers/semaphore.h"
+#include "../constants.h"
+#include "../proxy-helpers/wrappers.h"
+#include "../semaphore/semaphore.h"
 
 /* Global variables */
 extern unsigned long cur_time;        /* Used to update timestamp */

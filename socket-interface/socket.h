@@ -3,8 +3,8 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <arpa/inet.h>
-#include "constants.h"
-#include "proxy_helpers/error_handling.h"
+#include "../constants.h"
+#include "../proxy-helpers/error_handling.h"
 
 /* Simplifies calls to bind(), connect(), and accept() */
 typedef struct sockaddr SA;

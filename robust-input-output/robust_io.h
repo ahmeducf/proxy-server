@@ -3,7 +3,7 @@
 
 #include <unistd.h>
 #include <errno.h>
-#include "proxy_helpers/error_handling.h"
+#include "../proxy-helpers/error_handling.h"
 
 
 /* Persistent state for the robust I/O (Rio) package */

@@ -1,7 +1,7 @@
 #ifndef THREADING_H
 #define THREADING_H
 #include <pthread.h>
-#include "proxy_helpers/error_handling.h"
+#include "../proxy-helpers/error_handling.h"
 
 /* Pthreads thread control wrappers prototypes */
 void Pthread_create(pthread_t *tidp, pthread_attr_t *attrp, 

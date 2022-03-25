@@ -2,14 +2,14 @@
 #define PROXY_H
 
 #include "constants.h"
-#include "proxy_helpers/url_parser.h"
-#include "proxy_helpers/wrappers.h"
-#include "socket.h"
-#include "robust_io.h"
-#include "thread.h"
-#include "thread_helpers/sbuf.h"
-#include "thread_helpers/semaphore.h"
-#include "cache.h"
+#include "proxy-helpers/url_parser.h"
+#include "proxy-helpers/wrappers.h"
+#include "socket-interface/socket.h"
+#include "robust-input-output/robust_io.h"
+#include "thread-helpers/thread.h"
+#include "thread-helpers/sbuf.h"
+#include "semaphore/semaphore.h"
+#include "cache/cache.h"
 
 /* Worker thread routine prototype */
 void *thread(void *vargp);

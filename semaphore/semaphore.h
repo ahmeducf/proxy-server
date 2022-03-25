@@ -1,7 +1,7 @@
 #ifndef SEMAPHORE_H
 #define SEMAPHORE_
 #include <semaphore.h>
-#include "../proxy_helpers/error_handling.h"
+#include "../proxy-helpers/error_handling.h"
 #include "../constants.h"
 
 extern int cache_line_readcnt[CACHE_LINE_NUM];           /* number of readers per cache line */

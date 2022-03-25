@@ -50,6 +50,7 @@ static void serve_client(int connfd, cache_line_t *cache)
         /* Read object from cache */
         printf("<-- service from cache -->\n");
         service_from_cache(connfd, cache, matched_line_idx);
+        printf("This is a cached version of the request!\n");
     }
     else {
         printf("Cache miss!\n");

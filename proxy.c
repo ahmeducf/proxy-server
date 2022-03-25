@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
     Signal(SIGPIPE, SIG_IGN);
 
     listenfd = Open_listenfd(argv[1]);
-    printf("Proxy listening on port: %d\n", listenfd);
+    printf("Proxy listening on port: %s\n", argv[1]);
 
     /* Initialize cache */
     cache_init(&cache);
