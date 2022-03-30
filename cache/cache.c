@@ -2,6 +2,12 @@
 
 unsigned long cur_time = 0;     /* Used to update timestamp */
 
+/* Helper functions prototypes */
+static int get_write_idx(cache_line_t *cache);
+static size_t hash_func(char *str);
+
+
+
 /*
  * cache_init - initialize proxy's cache by allocating
  *              memory for it and initializing it to zeros.

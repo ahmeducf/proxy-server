@@ -17,10 +17,6 @@ typedef struct cache_line {
     int valid_bit;                    /* Valid bit */
 } cache_line_t;
 
-/* Helper functions prototypes */
-static int get_write_idx(cache_line_t *cache);
-static size_t hash_func(char *str);
-
 /* Functions prototypes */
 void cache_init(cache_line_t **cache_p);
 void write_cache(cache_line_t *cache, char *cache_buf, int object_size, size_t hash);
