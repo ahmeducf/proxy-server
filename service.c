@@ -8,9 +8,9 @@ static const char *user_agent_hdr = "User-Agent: Mozilla/5.0 (X11; Linux x86_64;
 /* Proxy/client and proxy/server functions prototypes */
 static void serve_client(int connfd, cache_line_t *cache);
 static void service_from_cache(int connfd, cache_line_t *cache, size_t matched_line_idx);
-static void service_from_server(int connfd, URL_INFO url_info, char *parsed_request,
+static void service_from_server(int connfd, URL_INFO *url_info, char *parsed_request,
                                 cache_line_t *cache, size_t HTTP_request_hash);
-static int connect_server(URL_INFO url_info, char *parsed_request, int connfd, char *cache_buf);
+static int connect_server(URL_INFO *url_info, char *parsed_request, int connfd, char *cache_buf);
 
 /* Manipulating HTTP requests functions prototypes */
 static int read_HTTP_request(int connfd, URL_INFO *url_infop, char *headers);
@@ -49,13 +49,13 @@ void *thread(void *vargp)
  */
 static void serve_client(int connfd, cache_line_t *cache)
 {
-    URL_INFO url_info;
+    URL_INFO *url_info = Malloc(4 * sizeof(char*));
     char parsed_request[MAXLINE];
     size_t HTTP_request_hash;
     int matched_line_idx;
 
     /* Read request line and headers from the client */
-    if (read_HTTP_request(connfd, &url_info, parsed_request) < 0)
+    if (read_HTTP_request(connfd, url_info, parsed_request) < 0)
         return;
 
     HTTP_request_hash = hash(parsed_request);
@@ -82,6 +82,7 @@ static void serve_client(int connfd, cache_line_t *cache)
     /* Forward request on to the server */
     connect_server(url_info, parsed_request, connfd, cache_buf);
 #endif
+    Free(url_info);
 }
 
 /*
@@ -90,7 +91,7 @@ static void serve_client(int connfd, cache_line_t *cache)
  *                  response and forward it to client. if proxy has a cache, copy
  *                  the response content to cache_buf to save it in the cache.
  */
-static int connect_server(URL_INFO url_info, char *parsed_request, int connfd, char *cache_buf)
+static int connect_server(URL_INFO *url_info, char *parsed_request, int connfd, char *cache_buf)
 {
     int clientfd;
     int total = 0;
@@ -98,8 +99,8 @@ static int connect_server(URL_INFO url_info, char *parsed_request, int connfd, c
     rio_t rio;
     ssize_t nread;
 
-    host = url_info.host;
-    port = url_info.port;
+    host = url_info->host;
+    port = url_info->port;
     if (!host || !port) return 0;
     if ((clientfd = open_clientfd(host, port)) < 0) {
         char msg[MAXLINE];
@@ -154,14 +155,13 @@ static int read_request_line(rio_t *rp, URL_INFO *url_infop, char *parsed_reques
         return -1;
     }
     // Check HTTP version
-    if (strcmp("HTTP/1.0", version) && strcmp("HTTP/1.1", version)) {
+    if (strcasecmp("HTTP/1.0", version) && strcasecmp("HTTP/1.1", version)) {
         clienterror(rp->rio_fd, version, "400", "Bad request",
                     "Invalid HTTP version");
         return -1;
     } else {
         strcpy(version, "HTTP/1.0");
     }
-
     parse_url(url_infop, url);
     if (!url_infop) {
         clienterror(rp->rio_fd, url, "400", "Bad request",
@@ -319,7 +319,7 @@ static void service_from_cache(int connfd, cache_line_t *cache, size_t matched_l
  *                       save object in the cache to read it quickly in case of
  *                       same future requests without connecting the server.
  */
-static void service_from_server(int connfd, URL_INFO url_info, char *parsed_request,
+static void service_from_server(int connfd, URL_INFO *url_info, char *parsed_request,
                          cache_line_t *cache, size_t HTTP_request_hash)
 {
     char cache_buf[MAX_OBJECT_SIZE];
