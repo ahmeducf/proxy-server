@@ -14,4 +14,6 @@ typedef struct url_info {
 
 /* Functions prototypes */
 URL_INFO *parse_url(URL_INFO *info, const char *url);
+void init_url_info(URL_INFO *info);
+void free_url_info(URL_INFO *info);
 #endif
