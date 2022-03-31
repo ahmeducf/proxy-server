@@ -3,12 +3,13 @@
 #include <string.h>
 #include "wrappers.h"
 #include <ctype.h>
+#include "../constants.h"
 
 typedef struct url_info {
-    char *protocol;
     char *host;
     char *port;
     char *path;
+    char *protocol;
 } URL_INFO;
 
 /* Functions prototypes */
