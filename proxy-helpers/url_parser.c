@@ -33,14 +33,15 @@ URL_INFO *parse_url(URL_INFO *info, const char *url)
     init_url_info(info);
 
     char *url_copy = (char *)Malloc(strlen(url) + 1);
-    char *temp = url_copy;
+    char *temp_host = (char *)Malloc(strlen(url) + 1);
+    char *temp_host_ptr = temp_host;
     strcpy(url_copy, url);
     strcpy(info->protocol, __strtok_r(url_copy, "://", &save_ptr));
-    strcpy(url_copy, strstr(url, "://"));
+    strcpy(temp_host, strstr(url, "://"));
 
-    if (url_copy) {
-        url_copy += 3;
-        strcpy(info->host, url_copy);
+    if (temp_host) {
+        temp_host += 3;
+        strcpy(info->host, temp_host);
         char *host_port_path = (char *)Calloc(1, strlen(info->host) + 1);
         strcpy(host_port_path, info->host);
         strcpy(info->host, __strtok_r(host_port_path, ":", &save_ptr));
@@ -82,7 +83,8 @@ URL_INFO *parse_url(URL_INFO *info, const char *url)
     else if (r)
         strcpy(info->protocol, "tcp");
     
-    Free(temp);
+    Free(url_copy);
+    Free(temp_host_ptr);
     Free(URL);
     Free(port_path_copy);
     return info;
