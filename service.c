@@ -82,7 +82,7 @@ static void serve_client(int connfd, cache_line_t *cache)
     /* Forward request on to the server */
     connect_server(url_info, parsed_request, connfd, cache_buf);
 #endif
-    Free(url_info);
+    free_url_info(url_info);
 }
 
 /*
