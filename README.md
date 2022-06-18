@@ -41,7 +41,7 @@ It has the following detailed behavior:
     2) Main thread then enters an infinite loop, waiting for connection requests using ***`Accept()`*** function defined in **`socket.c`** file.
     3) It then inserts the resulting connected descriptors in ***`sbuf`***.
     4) Each worker thread waits until it is able to remove a connected descriptor from the buffer and then calls the ***`serve_client()`*** function to serve the client.
-- ***`serve_client()`*** routine:
+- Run ***`serve_client()`*** routine:
     1) Read and parse the **HTTP** request sent from the client by calling ***`read_HTTP_request()`*** function defined in **`serve.c`** file.
     2) using ***`hash()`*** function defined in **`cache.c`** file, generate ***`HTTP_request_hash`*** that will be used to check if the cache contains the requested web object.
     3) If the object is cached then read the object out of the cache rather than communicating again with the server by calling ***`service_from_cache()`*** function defined in **`service.c`** file.
