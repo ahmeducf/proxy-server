@@ -37,22 +37,22 @@ A web proxy is a program that acts as a middleman between a Web browser and an e
 It has the following detailed behavior:
 - **Set up** the proxy to accept incoming connections:
 
-    1. Proxy creates a listening descriptor that is ready to receive connection requests on port ***`port`*** by calling ***`Open_listenfd()`*** funciton defined in **`socket.c`** file.
+    1. Proxy creates a listening descriptor that is ready to receive connection requests on port _port_ by calling ***`Open_listenfd()`*** funciton.
 
 - **Set up** the proxy to deal with multiple concurrent connections using **prethreading** technique:
 
-    1. After initializing buffer ***`sbuf`*** declared in **`sbuf.h`** file, the main thread creates the set of worker threads by calling ***`Pthread_create()`*** defined in **`thread.c`** file.
-    2. Main thread then enters an infinite loop, waiting for connection requests using ***`Accept()`*** function defined in **`socket.c`** file.
-    3. It then inserts the resulting connected descriptors in ***`sbuf`***.
+    1. After initializing buffer _sbuf_, the main thread creates the set of worker threads by calling ***`Pthread_create()`***.
+    2. Main thread then enters an infinite loop, waiting for connection requests using ***`Accept()`*** function.
+    3. It then inserts the resulting connected descriptors in _sbuf_.
     4. Each worker thread waits until it is able to remove a connected descriptor from the buffer and then calls the ***`serve_client()`*** function to serve the client.
    
 - **Run** ***`serve_client()`*** routine:
 
-    1. Read and parse the _HTTP_ request sent from the client by calling ***`read_HTTP_request()`*** function defined in **`serve.c`** file.
-    2. using ***`hash()`*** function defined in **`cache.c`** file, generate ***`HTTP_request_hash`*** that will be used to check if the cache contains the requested web object.
-    3. If the object is cached then read the object out of the cache rather than communicating again with the server by calling ***`service_from_cache()`*** function defined in **`service.c`** file.
-    4. Otherwise, using ***`service_from_server()`*** function, Try to connect the server then send it the ***`parsed_request`***, read its response, write it back to the client, and save it in an internal buffer for possible caching.
-    5. If ***`object_size`*** is less than ***`MAX_OBJECT_SIZE`*** write the object in a suitable cahce line.
+    1. Read and parse the _HTTP_ request sent from the client by calling ***`read_HTTP_request()`*** function.
+    2. using ***`hash()`*** function, generate _HTTP_request_hash_ that will be used to check if the cache contains the requested web object.
+    3. If the object is cached then read the object out of the cache rather than communicating again with the server by calling ***`service_from_cache()`*** function.
+    4. Otherwise, using ***`service_from_server()`*** function, Try to connect the server then send it the _parsed_request_, read its response, write it back to the client, and save it in an internal buffer for possible caching.
+    5. If _object_size_ is less than _MAX_OBJECT_SIZE_ write the object in a suitable cahce line.
 
 
 ## How does proxy deal with concurrent requests?
